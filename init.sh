@@ -12,13 +12,6 @@ CONFIG_DIR="/etc/bind"
 #
 mkdir -p /var/log/named
 
-#
-# generate keys
-#
-mkdir $CONFIG_DIR/keys
-cd $CONFIG_DIR/keys
-KEY_FILE=$(dnssec-keygen -a HMAC-MD5 -b 512 -n HOST server)
-KEY=$(grep ^Key $KEY_FILE.private | awk '{split($0,v," "); print v[2]}')
 
 #
 # Create bind zones with variable
@@ -60,7 +53,7 @@ do
 cat >$CONFIG_DIR/$ZONE.zone.reverse  <<EOL
 \$ORIGIN .
 \$TTL 604800
-$ZONE.in-addr.arpa IN SOA ns1.example.com. hostmaster.example.com. (
+$ZONE.in-addr.arpa IN SOA ns1.demo.com. hostmaster.demo.com. (
   2016021502 ; Serial
   604800     ; Refresh
   86400      ; Retry
